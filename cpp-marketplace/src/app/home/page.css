@@ -45,13 +45,16 @@
     border-radius: 0;
     background-color: white;
     color: black;
-    height: 400px;
+    height: 300px;
     border-radius: 10px;
+    overflow-y: auto;
+
   }
   
   /* ListingItem styles */
   .ListingItem {
     margin-bottom: 20px;
+    padding: 20px;
     height: 75px;
     width: 600px;
     font-size: 24px;
@@ -87,3 +90,15 @@
     width: 300px; /* Adjust the width based on your preference */
     font-size: 20px;
   }
+/* Style for normal state */
+a {
+          color: #747678; /* Link color */
+          text-decoration: none; /* Remove underline */
+          font-weight: bold; /* Make it bold */
+        }
+        
+        /* Style for hover state */
+a:hover {
+          color: #747678; /* Change color on hover */
+          
+        }
