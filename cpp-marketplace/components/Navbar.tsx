@@ -1,4 +1,6 @@
 // Navbar.tsx
+
+import '../database/firebase'
 import { useEffect, useState } from 'react';
 import { AppBar, Toolbar, Button, IconButton } from '@mui/material';
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";

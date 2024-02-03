@@ -1,8 +1,7 @@
 // pages/index.tsx
+'use client'
 
 import React from 'react';
-import Head from 'next/head';
-import Image from 'next/image';
 import {FormContainer, Label, Input, Select, Button} from '../../../components/Post/styles'
 import Navbar from '../../../components/Navbar';
 import PostForm from 'components/Post/postform';

@@ -15,6 +15,12 @@ const SignUp = () => {
 
     const handleCreateClick = async (e: any) => {
         e.preventDefault();
+
+        if (!email.includes("@cpp.edu")) {
+            alert("Must be a CPP email.");
+            return;
+        }
+
         try {
             await createUserWithEmailAndPassword(auth, email, password)
             .then(({ user }) => {
