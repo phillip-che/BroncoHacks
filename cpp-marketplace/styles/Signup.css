@@ -1,0 +1,74 @@
+/* Login.css */
+
+.signup-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* 100% of the viewport height */
+    color: gray;
+  }
+  
+  h2 {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  form {
+    width: 300px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f4f4f4;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 8px;
+  }
+  
+  input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+  }
+  
+  /* Style the Login button */
+  .button-signup {
+    width: 75%;
+    padding: 10px;
+    background-color: #78866b; /* Green color for Login button */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    margin-top: 5px;
+    justify-self: center;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    height: 40px;
+  }
+  
+  /* Style the Reset Password button */
+  .button-reset {
+    width: 75%;
+    padding: 10px;
+    background-color: #78866b; /* Orange color for Reset Password button */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    margin-top: 8px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  }
+
+  .create-account {
+    margin-top: 20px;
+    text-align: center;
+    justify-content: center;
+    display: block;
+    color: #78866b;
+  }
+  

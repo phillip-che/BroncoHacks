@@ -15,7 +15,7 @@ export const FormContainer = styled('form')({
   padding: 20,
   border: '1px solid #ddd',
   borderRadius: 5,
-  backgroundColor: '#acb1b9',
+  backgroundColor: '#bcc0c7',
   color: 'black',
   fontWeight: 500,
   marginBottom: 30,
@@ -49,17 +49,17 @@ export const InputWithRows = styled('input')<{ rows?: number }>((props) => ({
   }));
 
 export const Textarea = styled('textarea')<InputProps>((props) => ({
-    width: '100%',
-    padding: 8,
-    marginTop: 4,
-    marginBottom: 10,
-    boxSizing: 'border-box',
-    ...(props.rows && { height: `calc(${props.rows} * 1.5em)` }),
-    '&::placeholder': {
-      color: 'gray', // Adjust the color to your preference
-    },
-    verticalAlign: 'top',
-  }));
+  width: '100%',
+  padding: 8,
+  marginTop: 4,
+  marginBottom: 10,
+  boxSizing: 'border-box',
+  ...(props.rows && { height: `calc(${props.rows} * 1.5em)` }),
+  '&::placeholder': {
+    color: 'gray', // Adjust the color to your preference
+  },
+  verticalAlign: 'top',
+}));
 
 export const Select = styled('select')({
   width: '100%',
