@@ -17,7 +17,7 @@ interface Listing {
   price: number;
 }
 
-const categories = ['House', 'Tech', 'Funny', 'Other'];
+const categories = ['House', 'Kitchen', 'Technology', 'Funny', 'Bathroom', 'Laundry', 'Furniture', 'Misc'];
 
 // Simplified styling components
 const AppContainer = styled(Container)``;
