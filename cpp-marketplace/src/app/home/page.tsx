@@ -1,23 +1,21 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import { Container, Paper, List, ListItem, ListItemText, styled } from '@mui/material';
+import { collection, getDocs } from 'firebase/firestore';  // Make sure to import these functions
 import db from '../../../database/firebase';
-import { doc, getDoc } from 'firebase/firestore';
 
 interface Listing {
-  id: number;
+  id: string;
   title: string;
   category: string;
   description: string;
+  timestamp: string;
+  price: number;
 }
 
 const categories = ['House', 'Tech', 'Funny', 'Other'];
 
-const initialListings: Listing[] = [
-	{ id: 1, title: 'House Listing 1', category: 'House', description: 'Description 1 for house' },
-  ];
-
-  const AppContainer = styled(Container)`
+const AppContainer = styled(Container)`
   display: flex;
   overflow: auto; /* Enable scrolling for the entire content */
 `;
@@ -62,45 +60,59 @@ const ListingItem = styled(ListItem)`
   }
 `;
 
-
 const MarketplaceApp: React.FC = () => {
-	const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [listings, setListings] = useState<Listing[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
-	// Cateogry filtering
-	const filteredListings = selectedCategory
-		? initialListings.filter(
-			(listing) => listing.category.toLowerCase() === selectedCategory.toLowerCase()
-		)
-		: initialListings;
+  // get data from the database
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const postsRef = collection(db, 'posts');
+        const snapshot = await getDocs(postsRef);
+        const posts = snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })) as Listing[];
+        setListings(posts);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
 
-	return (
-		<AppContainer>
-		<CategoriesContainer>
-			<h2>Categories</h2>
-			<CategoryList>
-			<CategoryItem onClick={() => setSelectedCategory(null)}>
-				<ListItemText primary="All" />
-			</CategoryItem>
-			{categories.map((category) => (
-				<CategoryItem key={category} onClick={() => setSelectedCategory(category)}>
-				<ListItemText primary={category} />
-				</CategoryItem>
-			))}
-			</CategoryList>
-		</CategoriesContainer>
+    fetchData();
+  }, []); // Run the effect only once on component mount
 
-		<ListingsContainer>
-			<h2>Listings</h2>
-			<List>
-			{filteredListings.map((listing) => (
-				<ListingItem key={listing.id}>
-				<ListItemText primary={listing.title} secondary={listing.description} />
-				</ListingItem>
-			))}
-			</List>
-		</ListingsContainer>
-		</AppContainer>
-	);
-	};
+  // Category filtering
+  const filteredListings = selectedCategory
+    ? listings.filter((listing) => listing.category.toLowerCase() === selectedCategory.toLowerCase())
+    : listings;
 
-	export default MarketplaceApp;
+  return (
+    <AppContainer>
+      <CategoriesContainer>
+        <h2>Categories</h2>
+        <CategoryList>
+          <CategoryItem onClick={() => setSelectedCategory(null)}>
+            <ListItemText primary="All" />
+          </CategoryItem>
+          {categories.map((category) => (
+            <CategoryItem key={category} onClick={() => setSelectedCategory(category)}>
+              <ListItemText primary={category} />
+            </CategoryItem>
+          ))}
+        </CategoryList>
+      </CategoriesContainer>
+
+      <ListingsContainer>
+        <h2>Listings</h2>
+        <List>
+          {filteredListings.map((listing) => (
+            <ListingItem key={listing.id}>
+              <ListItemText primary={listing.title} secondary={listing.description} />
+            </ListingItem>
+          ))}
+        </List>
+      </ListingsContainer>
+    </AppContainer>
+  );
+};
+
+export default MarketplaceApp;
