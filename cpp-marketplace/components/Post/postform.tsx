@@ -46,7 +46,7 @@ const PostForm: React.FC = () => {
 
       <Label>
         Description:
-        <Textarea {...register('description', )} rows={5} placeholder='Enter item description here' style={{verticalAlign: 'top', lineHeight: '1' }}/>
+        <Textarea {...register('description', )} rows={5} placeholder='Enter item description here...' style={{verticalAlign: 'top', lineHeight: '1' }}/>
         {errors.description && <span>{errors.description.message}</span>}
       </Label>
 
