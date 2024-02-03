@@ -1,0 +1,75 @@
+/* MarketplaceApp.css */
+
+/* AppContainer styles */
+.AppContainer {
+    display: flex;
+    overflow: auto; /* Enable scrolling for the entire content */
+    margin-left: -300px;
+    height: 400px;
+  }
+  
+  /* CategoriesContainer styles */
+  .CategoriesContainer {
+    background-color: #78866b;
+    height: 100%;
+    width: 400px;
+    padding-left: 0px;
+    border-radius: 10px;
+    margin-left: 0px;
+    text-align: center;
+  }
+  
+  /* CategoryList styles */
+  .CategoryList {
+    padding: 0;
+  }
+  
+  /* CategoryItem styles */
+  .CategoryItem {
+    cursor: pointer;
+    background-color: gray;
+    color: #fff;
+    width: 200px;
+    padding-left: 15px;
+    &:hover {
+      background-color: #d1d1d1;
+    }
+  }
+  
+  /* ListingsContainer styles */
+  .ListingsContainer {
+    padding: 40px; /* Increased padding for larger dimensions */
+    margin-left: 200px; /* Set to CategoriesContainer width */
+    width: calc(100% - 200px); /* Adjust the width based on CategoriesContainer width */
+    border-radius: 0;
+    background-color: gray;
+  }
+  
+  /* ListingItem styles */
+  .ListingItem {
+    margin-bottom: 20px;
+    height: 400px;
+    background-color: #d1d1d1;
+    width: 100px;
+    position: relative; /* Position relative for absolute positioning of category and timestamp */
+    &:hover {
+      background-color: #91ac17;
+    }
+  }
+  
+  /* ListingDetails styles */
+  .ListingDetails {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 5px;
+    font-size: 12px; /* Smaller font size */
+  }
+  
+  /* Additional styles if needed */
+  
