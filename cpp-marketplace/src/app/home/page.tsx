@@ -60,12 +60,12 @@ const MarketplaceApp: React.FC = () => {
       <Navbar />
       <div className="CategoriesContainer">
         <h2>Categories</h2>
-        <CategoryList>
-          <CategoryItem onClick={() => setSelectedCategory(null)}>
+        <CategoryList className="CategoryList">
+          <CategoryItem className="CategoryItem" onClick={() => setSelectedCategory(null)}>
             <ListItemText primary="All" />
           </CategoryItem>
           {categories.map((category) => (
-            <CategoryItem key={category} onClick={() => setSelectedCategory(category)}>
+            <CategoryItem className="CategoryItem" key={category} onClick={() => setSelectedCategory(category)}>
               <ListItemText primary={category} />
             </CategoryItem>
           ))}
@@ -73,12 +73,11 @@ const MarketplaceApp: React.FC = () => {
       </div>
 
       <div className="ListingsContainer">
-        <h2>Listings</h2>
         <List>
           {filteredListings.map((listing) => (
-            <ListingItem key={listing.id}>
-              <ListItemText primary={listing.title} secondary={listing.description} />
-              <ListingDetails>
+            <ListingItem className="ListingItem" key={listing.id}>
+              <ListItemText primary={listing.title} />
+              <ListingDetails className="ListingDetails">
 			  	<div>{listing.category}</div>
   				<div>{listing.timestamp && listing.timestamp.toDate().toLocaleString()}</div>
 			  </ListingDetails>
