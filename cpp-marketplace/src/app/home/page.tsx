@@ -1,6 +1,8 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Paper, List, ListItem, ListItemText, styled } from '@mui/material';
+import db from '../../../database/firebase';
+import { doc, getDoc } from 'firebase/firestore';
 
 interface Listing {
   id: number;
@@ -13,21 +15,6 @@ const categories = ['House', 'Tech', 'Funny', 'Other'];
 
 const initialListings: Listing[] = [
 	{ id: 1, title: 'House Listing 1', category: 'House', description: 'Description 1 for house' },
-	{ id: 2, title: 'Tech Listing 1', category: 'Tech', description: 'Description 1 for tech' },
-	{ id: 3, title: 'Funny Listing 1', category: 'Funny', description: 'Description 1 for funny' },
-	{ id: 4, title: 'House Listing 2', category: 'House', description: 'Description 2 for house' },
-	{ id: 5, title: 'Tech Listing 2', category: 'Tech', description: 'Description 2 for tech' },
-	{ id: 6, title: 'Funny Listing 2', category: 'Funny', description: 'Description 2 for funny' },
-	{ id: 7, title: 'Funny Listing 3', category: 'Funny', description: 'Description 2 for funny' },
-	{ id: 8, title: 'Funny Listing 4', category: 'Funny', description: 'Description 2 for funny' },
-	{ id: 9, title: 'Funny Listing 5', category: 'Funny', description: 'Description 2 for funny' },
-	{ id: 10, title: 'Funny Listing 6', category: 'Funny', description: 'Description 2 for funny' },
-	{ id: 11, title: 'Funny Listing 7', category: 'Funny', description: 'Description 2 for funny' },
-	{ id: 12, title: 'Funny Listing 8', category: 'Funny', description: 'Description 2 for funny' },
-	{ id: 13, title: 'Funny Listing 9', category: 'Funny', description: 'Description 2 for funny' },
-	{ id: 14, title: 'Funny Listing 10', category: 'Funny', description: 'Description 2 for funny' },
-	{ id: 15, title: 'Funny Listing 11', category: 'Funny', description: 'Description 2 for funny' },
-	// Add more listings as needed
   ];
 
   const AppContainer = styled(Container)`
@@ -75,43 +62,46 @@ const ListingItem = styled(ListItem)`
   }
 `;
 
+
 const MarketplaceApp: React.FC = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+	const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+	
+	// Cateogry filtering
+	const filteredListings = selectedCategory
+		? initialListings.filter(
+			(listing) => listing.category.toLowerCase() === selectedCategory.toLowerCase()
+		)
+		: initialListings;
 
-  const filteredListings = selectedCategory
-    ? initialListings.filter(
-        (listing) => listing.category.toLowerCase() === selectedCategory.toLowerCase()
-      )
-    : initialListings;
+	return (
+		<AppContainer>
+		<CategoriesContainer>
+			<h2>Categories</h2>
+			<button onClick = {readData}>Blah</button>
+			<CategoryList>
+			<CategoryItem onClick={() => setSelectedCategory(null)}>
+				<ListItemText primary="All" />
+			</CategoryItem>
+			{categories.map((category) => (
+				<CategoryItem key={category} onClick={() => setSelectedCategory(category)}>
+				<ListItemText primary={category} />
+				</CategoryItem>
+			))}
+			</CategoryList>
+		</CategoriesContainer>
 
-  return (
-    <AppContainer>
-      <CategoriesContainer>
-        <h2>Categories</h2>
-        <CategoryList>
-          <CategoryItem onClick={() => setSelectedCategory(null)}>
-            <ListItemText primary="All" />
-          </CategoryItem>
-          {categories.map((category) => (
-            <CategoryItem key={category} onClick={() => setSelectedCategory(category)}>
-              <ListItemText primary={category} />
-            </CategoryItem>
-          ))}
-        </CategoryList>
-      </CategoriesContainer>
+		<ListingsContainer>
+			<h2>Listings</h2>
+			<List>
+			{filteredListings.map((listing) => (
+				<ListingItem key={listing.id}>
+				<ListItemText primary={listing.title} secondary={listing.description} />
+				</ListingItem>
+			))}
+			</List>
+		</ListingsContainer>
+		</AppContainer>
+	);
+	};
 
-      <ListingsContainer>
-        <h2>Listings</h2>
-        <List>
-          {filteredListings.map((listing) => (
-            <ListingItem key={listing.id}>
-              <ListItemText primary={listing.title} secondary={listing.description} />
-            </ListingItem>
-          ))}
-        </List>
-      </ListingsContainer>
-    </AppContainer>
-  );
-};
-
-export default MarketplaceApp;
+	export default MarketplaceApp;
