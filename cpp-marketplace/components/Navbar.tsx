@@ -21,7 +21,6 @@ const Navbar: React.FC = () => {
         setIsLoggedIn(true);
       } else {
         setIsLoggedIn(false);
-        router.push('/');
       }
     });
   }, [auth])
