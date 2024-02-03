@@ -63,7 +63,7 @@ const ViewListing: FC<pageProps> = ({ params }) => {
 			  <strong>Contact:</strong> {listingDetails.contact || 'N/A'}
 			</div>
   
-			<div>
+			<div className="barrier">
 			  {/* <strong>Timestamp:</strong> {listingDetails.timestamp || 'N/A'} */}
 			</div>
   

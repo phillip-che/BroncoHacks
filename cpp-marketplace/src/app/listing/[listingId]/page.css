@@ -1,11 +1,16 @@
 .view-listing-container {
-          padding: 20px;
+          padding: 15px;
           margin: 20px;
+          background-color: #78866b;
+          border-radius: 20px;
         }
         
         .listing-details-paper {
           padding: 20px;
-          margin-top: 20px;
           text-align: left;
+          border-radius: 10px;
         }
         
+.barrier {
+  height: 20px;
+}
