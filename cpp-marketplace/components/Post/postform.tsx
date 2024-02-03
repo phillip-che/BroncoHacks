@@ -8,6 +8,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { v4 as uuidv4 } from 'uuid';
 import { useRouter } from 'next/navigation';
+import { Timestamp } from 'firebase/firestore';
 
 // Interface for form input
 interface FormInput {
@@ -64,7 +65,8 @@ const PostForm: React.FC = () => {
         description: description,
         contact: contact,
         category: category,
-        imgUrl: img
+        imgUrl: img,
+        timestamp: Timestamp.now()
       });
       alert("Post Successful!");
       router.push('/home');

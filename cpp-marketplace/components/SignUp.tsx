@@ -5,7 +5,6 @@ import { createUserWithEmailAndPassword, getAuth, sendEmailVerification, updateP
 import { useEffect, useState } from 'react';
 import '../styles/Signup.css'; // Adjust the path based on your project structure
 
-
 const SignUp = () => {
     const auth = getAuth();
 

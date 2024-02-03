@@ -51,6 +51,11 @@ const ViewListing: FC<pageProps> = ({ params }) => {
 		  <Paper className="listing-details-paper">
 			<h2>{listingDetails.title || 'N/A'}</h2>
 			{/* Render listing details dynamically */}
+
+			<div>
+			  <strong>User:</strong> {listingDetails.username || 'N/A'}
+			</div>
+
 			<div>
 			  <strong>Description:</strong> {listingDetails.description || 'N/A'}
 			</div>

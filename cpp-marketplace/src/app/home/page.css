@@ -42,7 +42,6 @@
     padding: 40px; /* Increased padding for larger dimensions */
     margin-left: 200px; /* Set to CategoriesContainer width */
     width: 700px; /* Adjust the width based on CategoriesContainer width */
-    border-radius: 0;
     background-color: white;
     color: black;
     height: 400px;
