@@ -5,7 +5,7 @@ import { Container, Paper, List, ListItem, ListItemText, styled } from '@mui/mat
 import { Timestamp, collection, getDocs } from 'firebase/firestore';
 import { db } from '../../../database/firebase';
 import Navbar from 'components/Navbar';
-import '../home/page.css'
+import '../home/page.css';
 import Link from 'next/link';
 
 interface Listing {
@@ -51,44 +51,51 @@ const MarketplaceApp: React.FC = () => {
     ? listings.filter((listing) => listing.category.toLowerCase() === selectedCategory.toLowerCase())
     : listings;
 
+  // Sort the listings by timestamp in descending order
+  const sortedListings = [...filteredListings].sort(
+    (a, b) => (b.timestamp?.toDate() || 0) - (a.timestamp?.toDate() || 0)
+  );
+
   return (
-
-	
-	<div className="homepage-container">
-    <div className="background-image" />
-    <div className="AppContainer">
-      <Navbar />
-      <div className="CategoriesContainer">
-        <h2>Categories</h2>
-        <CategoryList className="CategoryList">
-          <CategoryItem className="CategoryItem" onClick={() => setSelectedCategory(null)}>
-            <ListItemText primary="All" />
-          </CategoryItem>
-          {categories.map((category) => (
-            <CategoryItem className="CategoryItem" key={category} onClick={() => setSelectedCategory(category)}>
-              <ListItemText className="CategoryName" primary={category} />
+    <div className="homepage-container">
+      <div className="background-image" />
+      <div className="AppContainer">
+        <Navbar />
+        <div className="CategoriesContainer">
+          <h2>Categories</h2>
+          <CategoryList className="CategoryList">
+            <CategoryItem className="CategoryItem" onClick={() => setSelectedCategory(null)}>
+              <ListItemText primary="All" />
             </CategoryItem>
-          ))}
-        </CategoryList>
-      </div>
+            {categories.map((category) => (
+              <CategoryItem
+                className="CategoryItem"
+                key={category}
+                onClick={() => setSelectedCategory(category)}
+              >
+                <ListItemText className="CategoryName" primary={category} />
+              </CategoryItem>
+            ))}
+          </CategoryList>
+        </div>
 
-      <div className="ListingsContainer">
-        <List>
-          {filteredListings.map((listing) => (
-			<Link href={`/listing/${listing.id}`} key={listing.id} >
-				<ListingItem className="ListingItem" key={listing.id}>
-				<ListItemText primary={listing.title} />
-				<ListingDetails className="ListingDetails">
-					<div>{listing.category}</div>
-					<div>{listing.timestamp && listing.timestamp.toDate().toLocaleString()}</div>
-				</ListingDetails>
-				</ListingItem>
-			</Link>
-          ))}
-        </List>
+        <div className="ListingsContainer">
+          <List>
+            {sortedListings.map((listing) => (
+              <Link href={`/listing/${listing.id}`} key={listing.id}>
+                <ListingItem className="ListingItem" key={listing.id}>
+                  <ListItemText primary={listing.title} />
+                  <ListingDetails className="ListingDetails">
+                    <div>{listing.category}</div>
+                    <div>{listing.timestamp && listing.timestamp.toDate().toLocaleString()}</div>
+                  </ListingDetails>
+                </ListingItem>
+              </Link>
+            ))}
+          </List>
+        </div>
       </div>
     </div>
-	</div>
   );
 };
 
