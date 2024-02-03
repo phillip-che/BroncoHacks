@@ -2,6 +2,8 @@
 import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { FormContainer, Label, Input, InputWithRows, Select, Button, ButtonContainer, Textarea } from './styles'; // Import styled components
+import db from '../../database/firebase'
+import * as firestore from 'firebase/firestore';
 
 // Interface for form input
 interface FormInput {
@@ -23,6 +25,15 @@ const PostForm: React.FC = () => {
   const onSubmit: SubmitHandler<FormInput> = (data) => {
     // Handle form submission logic here
     console.log(data);
+
+    const postsRef = firestore.collection(db, 'posts');
+    firestore.getDocs(postsRef).then((snapshot) => {
+      let posts: any[] = [];
+      snapshot.docs.forEach((doc) => {
+        posts.push({...doc.data(), id: doc.id});
+      });
+      console.log(posts);
+    });
   };
 
   return (
