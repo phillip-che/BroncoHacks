@@ -65,7 +65,7 @@ const MarketplaceApp: React.FC = () => {
           </CategoryItem>
           {categories.map((category) => (
             <CategoryItem className="CategoryItem" key={category} onClick={() => setSelectedCategory(category)}>
-              <ListItemText primary={category} />
+              <ListItemText className="CategoryName" primary={category} />
             </CategoryItem>
           ))}
         </CategoryList>
@@ -75,7 +75,7 @@ const MarketplaceApp: React.FC = () => {
         <List>
           {filteredListings.map((listing) => (
             <ListingItem className="ListingItem" key={listing.id}>
-              <ListItemText primary={listing.title} />
+              <ListItemText className="ListItemText" primary={listing.title} />
               <ListingDetails className="ListingDetails">
 			  	<div>{listing.category}</div>
   				<div>{listing.timestamp && listing.timestamp.toDate().toLocaleString()}</div>
