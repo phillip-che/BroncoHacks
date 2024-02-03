@@ -6,6 +6,10 @@ import styles from "./page.module.css";
 import Login from "../../components/Login";
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Navbar from '../../components/Navbar';
+import PostForm from 'components/Post/postform';
+import backgroundImage from '../../styles/cppbackgroundpic.jpg'
+
 
 export default function Home() {
 
@@ -26,8 +30,16 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-      {userID ? <div> LOGGED IN. </div> : <div> <Login /> </div>}
+      {userID ? 
+      <div className="homepage-container">
+        <div className="background-image"></div>
+      {/* <main className={styles.main}> */}
+        <Navbar />
+        {/* Other content of your app */}
+      {/* </main> */}
+      </div>
+      : <div> <Login /> </div>}
       {/* <SignUp /> */}
     </main>
   );
-}
+};

@@ -1,0 +1,34 @@
+/* Navbar.css */
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    position: fixed;
+}
+
+.navbar-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #78866b;
+  }
+  
+  .navbar-left {
+    display: flex
+  }
+
+  .navbar-left button {
+    font-size: 20px; /* size of CPP Marketplace button */
+    color: azure;
+  }
+
+  .navbar-right-buttons button {
+    justify-content: right;
+    font-size: 20px; /* size create listing / logout buttons */
+    color: azure;
+  }
+  
+  
