@@ -79,9 +79,9 @@ const MarketplaceApp: React.FC = () => {
             <ListingItem key={listing.id}>
               <ListItemText primary={listing.title} secondary={listing.description} />
               <ListingDetails>
-                <div>{listing.category}</div>
-                <div>{listing.timestamp.toDate().toLocaleString()}</div>
-              </ListingDetails>
+			  	<div>{listing.category}</div>
+  				<div>{listing.timestamp && listing.timestamp.toDate().toLocaleString()}</div>
+			  </ListingDetails>
             </ListingItem>
           ))}
         </List>
