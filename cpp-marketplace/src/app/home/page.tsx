@@ -65,7 +65,7 @@ const ListingItem = styled(ListItem)`
 
 const MarketplaceApp: React.FC = () => {
 	const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-	
+
 	// Cateogry filtering
 	const filteredListings = selectedCategory
 		? initialListings.filter(
@@ -77,7 +77,6 @@ const MarketplaceApp: React.FC = () => {
 		<AppContainer>
 		<CategoriesContainer>
 			<h2>Categories</h2>
-			<button onClick = {readData}>Blah</button>
 			<CategoryList>
 			<CategoryItem onClick={() => setSelectedCategory(null)}>
 				<ListItemText primary="All" />
