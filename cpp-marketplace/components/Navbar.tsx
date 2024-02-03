@@ -6,7 +6,7 @@ import '../styles/Navbar.css'; // Adjust the path based on your project structur
 
 const Navbar: React.FC = () => {
   return (
-    <AppBar position="static">
+    <AppBar position="fixed">
       <Toolbar className="navbar-toolbar">
         <div className="navbar-left">
           <IconButton size="large" edge="start" color="inherit" aria-label="menu">

@@ -5,6 +5,10 @@ body {
     padding: 0;
 }
 
+.navbar {
+    position: fixed;
+}
+
 .navbar-toolbar {
     display: flex;
     justify-content: space-between;

@@ -1,7 +1,7 @@
 'use client'
 import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { FormContainer, Label, Input, Select, Button } from './styles'; // Import styled components
+import { FormContainer, Label, Input, InputWithRows, Select, Button, ButtonContainer, Textarea } from './styles'; // Import styled components
 
 // Interface for form input
 interface FormInput {
@@ -29,19 +29,19 @@ const PostForm: React.FC = () => {
     <FormContainer onSubmit={handleSubmit(onSubmit)}>
       <Label>
         Title:
-        <Input {...register('title', { required: 'Title is required' })} type="text" />
+        <Input {...register('title', )} type="text" placeholder='Enter your title here' />
         {errors.title && <span>{errors.title.message}</span>}
       </Label>
 
       <Label>
         Description:
-        <Input {...register('description', { required: 'Description is required' })} type="text" />
+        <Textarea {...register('description', )} rows={5} placeholder='Enter item description here' style={{verticalAlign: 'top', lineHeight: '1' }}/>
         {errors.description && <span>{errors.description.message}</span>}
       </Label>
 
       <Label>
         Contact Information:
-        <Input {...register('contactInfo', { required: 'Contact information is required' })} type="text" />
+        <Input {...register('contactInfo', )} type="text" placeholder='ex: (123)-456-7890'/>
         {errors.contactInfo && <span>{errors.contactInfo.message}</span>}
       </Label>
 
@@ -61,12 +61,13 @@ const PostForm: React.FC = () => {
       </Label>
 
 	<Label>
-	Image (optional):
-	<Input {...register('image')} type="file" accept=".jpg" />
+	Image:
+	<Input {...register('image',{required:'Image is required'})} type="file" accept=".jpg" />
 	</Label>
 
-
-      <Button type="submit">Submit</Button>
+    <ButtonContainer>
+        <Button type="submit">Submit</Button>
+    </ButtonContainer>
     </FormContainer>
   );
 };

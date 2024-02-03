@@ -1,40 +1,89 @@
 // components/Post/styles.ts
-import styled from 'styled-components';
+//MUI stylign not css
+// components/Post/styles.ts
+import { styled, alpha } from '@mui/system';
 
-export const FormContainer = styled.form`
-  max-width: 400px;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-`;
+interface InputProps {
+    rows?: number;
+}
 
-export const Label = styled.label`
-  display: block;
-  margin-bottom: 10px;
-`;
+export const FormContainer = styled('form')({
+  paddingTop: 200,
+  maxWidth: 400,
+  margin: 'auto',
+  marginTop: 75,
+  padding: 20,
+  border: '1px solid #ddd',
+  borderRadius: 5,
+  backgroundColor: '#acb1b9',
+  color: 'black',
+  fontWeight: 500,
+  marginBottom: 30,
+});
 
-export const Input = styled.input`
-  width: 100%;
-  padding: 8px;
-  margin-top: 4px;
-  margin-bottom: 10px;
-  box-sizing: border-box;
-`;
+export const Label = styled('label')({
+  display: 'block',
+  marginBottom: 10,
+});
 
-export const Select = styled.select`
-  width: 100%;
-  padding: 8px;
-  margin-top: 4px;
-  margin-bottom: 10px;
-  box-sizing: border-box;
-`;
+export const Input = styled('input')<InputProps>((props) =>({
+  width: '100%',
+  padding: 8,
+  marginTop: 4,
+  marginBottom: 10,
+  boxSizing: 'border-box',
+  ...(props.rows && { height: `calc(${props.rows} * 1.5em)` }),
+  '&::placeholder': {
+    color: 'gray', // Adjust the color to your preference
+  },
+  '& textarea': {
+    verticalAlign: 'top',
+    height: `calc(${props.rows} * 1.5em)`, // Adjust height for textareas
+  },
+}));
 
-export const Button = styled.button`
-  background-color: #4caf50;
-  color: white;
-  padding: 10px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-`;
+
+
+export const InputWithRows = styled('input')<{ rows?: number }>((props) => ({
+    height: `calc(${props.rows ?? 1} * 1.5em)`,
+  }));
+
+export const Textarea = styled('textarea')<InputProps>((props) => ({
+    width: '100%',
+    padding: 8,
+    marginTop: 4,
+    marginBottom: 10,
+    boxSizing: 'border-box',
+    ...(props.rows && { height: `calc(${props.rows} * 1.5em)` }),
+    '&::placeholder': {
+      color: 'gray', // Adjust the color to your preference
+    },
+    verticalAlign: 'top',
+  }));
+
+export const Select = styled('select')({
+  width: '100%',
+  padding: 8,
+  marginTop: 4,
+  marginBottom: 10,
+  boxSizing: 'border-box',
+});
+
+export const ButtonContainer = styled('div')({
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+  });
+
+export const Button = styled('button')({
+  backgroundColor: '#78866b',
+  color: 'white',
+  padding: 15,
+  border: 'none',
+  borderRadius: 4,
+  cursor: 'pointer',
+  fontSize: 20,
+  margin: 'auto',
+  marginTop: 5,
+  width: '50%',
+});
