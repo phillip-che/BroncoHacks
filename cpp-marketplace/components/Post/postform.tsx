@@ -1,11 +1,13 @@
 'use client'
 import {useEffect, useState} from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import { FormContainer, Label, Input, InputWithRows, Select, Button, ButtonContainer, Textarea } from './styles'; // Import styled components
-import db from '../../database/firebase'
-import * as firestore from 'firebase/firestore';
+import { useForm } from 'react-hook-form';
+import { FormContainer, Label, Input, Select, Button, ButtonContainer, Textarea } from './styles'; // Import styled components
+import { db, imgDb } from '../../database/firebase'
 import { addDoc, collection } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { v4 as uuidv4 } from 'uuid';
+import { useRouter } from 'next/navigation';
 
 // Interface for form input
 interface FormInput {
@@ -25,9 +27,10 @@ const PostForm: React.FC = () => {
   const [description, setDescription] = useState("");
   const [contact, setContact] = useState("");
   const [category, setCategory] = useState("");
-  // const [title, setTitle] = useState("");
+  const [img, setImg] = useState("");
 
   const auth = getAuth();
+  const router = useRouter();
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -49,12 +52,10 @@ const PostForm: React.FC = () => {
 
   const onPostClick = () => {
     // Handle form submission logic here
-
-    console.log(username);
-    console.log(title);
-    console.log(description);
-    console.log(contact);
-    console.log(category);
+    if(!title || !description || !contact || !category) {
+      alert("Required Fields Missing");
+      return;
+    }
 
     const savePost = async () => {
       await addDoc(collection(db, "posts"), {
@@ -63,13 +64,25 @@ const PostForm: React.FC = () => {
         description: description,
         contact: contact,
         category: category,
-      }).then(() => {
-        alert("Post Successful!");
+        imgUrl: img
       });
+      alert("Post Successful!");
+      router.push('/home');
     };
 
     savePost();
   };
+
+  const onUploadClick = (e: any) => {
+    console.log(e.target.files[0]);
+    const img = ref(imgDb, `Imgs/${uuidv4()}`);
+    uploadBytes(img, e.target.files[0]).then(data => {
+      console.log(data, "imgs");
+      getDownloadURL(data.ref).then(val => {
+        setImg(val);
+      })
+    })
+  }
 
   return (
     <FormContainer>
@@ -104,9 +117,8 @@ const PostForm: React.FC = () => {
 
 	<Label>
 	Image:
-	<Input {...register('image',{required:'Image is required'})} type="file" accept=".jpg" />
+	<Input {...register('image',{required:'Image is required'})} type="file" accept=".jpg" onChange={onUploadClick}/>
 	</Label>
-
     <ButtonContainer>
         <Button type="submit" onClick={onPostClick}>Post</Button>
     </ButtonContainer>

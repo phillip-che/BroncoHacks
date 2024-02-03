@@ -2,7 +2,6 @@
 'use client'
 
 import React from 'react';
-import {FormContainer, Label, Input, Select, Button} from '../../../components/Post/styles'
 import Navbar from '../../../components/Navbar';
 import PostForm from 'components/Post/postform';
 

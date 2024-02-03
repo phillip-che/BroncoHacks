@@ -5,13 +5,11 @@ import { useEffect, useState } from 'react';
 import { AppBar, Toolbar, Button, IconButton } from '@mui/material';
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import StorefrontIcon from '@mui/icons-material/Storefront';
-import { useRouter } from 'next/navigation';
 import '../styles/Navbar.css'; // Adjust the path based on your project structure
 
 const Navbar: React.FC = () => {
 
   const auth = getAuth();
-  const router = useRouter();
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   
