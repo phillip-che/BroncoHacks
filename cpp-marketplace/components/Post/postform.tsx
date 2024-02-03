@@ -48,22 +48,23 @@ const PostForm: React.FC = () => {
       <Label>
         Category:
         <Select {...register('category', { required: 'Category is required' })}>
-          <option value="" disabled>
-            Select a category
-          </option>
-          {categories.map((category) => (
-            <option key={category} value={category}>
-              {category}
-            </option>
-          ))}
+	<option value="" disabled>
+	  Select a category
+	</option>
+	{categories.map((category) => (
+	  <option key={category} value={category}>
+	    {category}
+	  </option>
+	))}
         </Select>
         {errors.category && <span>{errors.category.message}</span>}
       </Label>
 
-      <Label>
-        Image (optional):
-        <Input {...register('image')} type="text" />
-      </Label>
+	<Label>
+	Image (optional):
+	<Input {...register('image')} type="file" accept=".jpg" />
+	</Label>
+
 
       <Button type="submit">Submit</Button>
     </FormContainer>
