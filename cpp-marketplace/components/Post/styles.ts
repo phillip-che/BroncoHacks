@@ -1,7 +1,7 @@
 // components/Post/styles.ts
 import styled from 'styled-components';
 
-const FormContainer = styled.form`
+export const FormContainer = styled.form`
   max-width: 400px;
   margin: auto;
   padding: 20px;
@@ -9,12 +9,12 @@ const FormContainer = styled.form`
   border-radius: 5px;
 `;
 
-const Label = styled.label`
+export const Label = styled.label`
   display: block;
   margin-bottom: 10px;
 `;
 
-const Input = styled.input`
+export const Input = styled.input`
   width: 100%;
   padding: 8px;
   margin-top: 4px;
@@ -22,7 +22,7 @@ const Input = styled.input`
   box-sizing: border-box;
 `;
 
-const Select = styled.select`
+export const Select = styled.select`
   width: 100%;
   padding: 8px;
   margin-top: 4px;
@@ -30,7 +30,7 @@ const Select = styled.select`
   box-sizing: border-box;
 `;
 
-const Button = styled.button`
+export const Button = styled.button`
   background-color: #4caf50;
   color: white;
   padding: 10px;
