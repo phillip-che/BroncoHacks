@@ -1,45 +1,73 @@
-import { User, getAuth, onAuthStateChanged } from 'firebase/auth'
+import '../database/firebase'
+import { signInWithEmailAndPassword, getAuth, onAuthStateChanged, sendPasswordResetEmail } from 'firebase/auth'
 import { useEffect, useState } from 'react';
-import db, { auth } from "../database/firebase";
-import firebase from 'firebase/compat/app';
+import Link from 'next/link';
 
 const Login = () => {
-    const auth = getAuth();
 
     const [username, setUsername] = useState<string | null>("");
-    const [emailInput, setUserInput] = useState("");
-    const [passwordInput, setPasswordInput] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState<string | null>(null);
+
+    const auth = getAuth();
 
     const handleLoginClick = async (e: any) => {
         e.preventDefault();
+
         try {
-            firebase.auth().createUserWithEmailAndPassword(email, password)
+            await signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
-                // Signed in 
+                console.log(userCredential);
+                // Signed in
                 const user = userCredential.user;
                 if(user) {
+                    alert(user.displayName + " Signed In!");
                     setUsername(user.displayName);
                 }
             })
             .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
+                setError(error.message);
             });
         } catch (error) {
             console.error(error);
         }
     }
 
-    useEffect(() => {
-        
-    }, []);
+    const handleResetClick = async () => {
+        sendPasswordResetEmail(auth, email)
+        .then(() => {
+            console.log("Password Reset Link Sent!")
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+
+    }
 
     return (
-        <div>
-            LOGIN PAGE
-        </div>
+        <div className="login-container">
+            <h2>Login</h2>
+                <form>
+                <div>
+                    <label>Email:</label>
+                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                </div>
+                <div>
+                    <label>Password:</label>
+                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                    <button type="button" onClick={handleResetClick}>
+                        Reset Password
+                    </button>
+                </div>
+                    <button type="button" onClick={handleLoginClick}>
+                        Login
+                    </button>
+                    <Link href="/createaccount">Create Account</Link>
+                </form>
+            {error && <p style={{ color: 'red' }}>{error}</p>}
+      </div>
+  
     )
 }
 

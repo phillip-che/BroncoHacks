@@ -1,46 +1,33 @@
 'use client'
 
-import db from "../../database/firebase";
+import '../../database/firebase'
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import styles from "./page.module.css";
 import Login from "../../components/Login";
 import { useEffect, useState } from 'react';
-import { addDoc, collection, doc, getDocs, setDoc } from "firebase/firestore"; 
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
 
-  const [posts, setPosts] = useState([]);
+  const auth = getAuth();
+  const router = useRouter();
+  const [userID, setUserID] = useState("");
 
-  // const savePost = async () => {
-  //   const docRef = await addDoc(collection(db, "posts"), {
-  //     username: "test username",
-  //     description: "test description"
-  //   });
-  // };
-  
   useEffect(() => {
-    const fetchPosts = async () => {
-      const posts = await getDocs(collection(db, "posts"));
-      console.log(posts);
+    onAuthStateChanged(auth, (user) => {
+      console.log(user);
+      if (user && user.emailVerified) {
+        setUserID(user.uid);
+        router.push('/home');
+      } 
+    });
 
-      // const postsData = posts.docs.map((doc) => ({
-      //   id: doc.id,
-      //   ...doc.data(),
-      // }));
-
-      // const postArray: any = [];
-      // posts.forEach((post) => {
-      //   postArray.push(post);
-      // });
-      // console.log(postArray);
-      // setPosts(postArray);
-      
-    };
-    fetchPosts();
-  }, []);
+  }, [auth]);
 
   return (
     <main className={styles.main}>
-      <Login />
+      {userID ? <div> LOGGED IN. </div> : <div> <Login /> </div>}
+      {/* <SignUp /> */}
     </main>
   );
 }
