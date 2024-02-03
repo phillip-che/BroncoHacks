@@ -1,9 +1,11 @@
 'use client'
-import React from 'react';
+import {useEffect, useState} from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { FormContainer, Label, Input, InputWithRows, Select, Button, ButtonContainer, Textarea } from './styles'; // Import styled components
 import db from '../../database/firebase'
 import * as firestore from 'firebase/firestore';
+import { addDoc, collection } from 'firebase/firestore';
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 // Interface for form input
 interface FormInput {
@@ -13,52 +15,82 @@ interface FormInput {
   category: string;
   image?: string;
 }
+
 const categories = ['House', 'Kitchen', 'Technology', 'Funny', 'Bathroom', 'Laundry', 'Furniture', 'Misc'];
 
 const PostForm: React.FC = () => {
+
+  const [username, setUsername] = useState("");
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [contact, setContact] = useState("");
+  const [category, setCategory] = useState("");
+  // const [title, setTitle] = useState("");
+
+  const auth = getAuth();
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      console.log(user);
+      if (user && user.emailVerified && user.displayName) {
+        setUsername(user.displayName);
+      } else {
+        setUsername("");
+      }
+    });
+    
+  }, [auth]);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormInput>(); // Specify the form input type
 
-  const onSubmit: SubmitHandler<FormInput> = (data) => {
+  const onPostClick = () => {
     // Handle form submission logic here
-    console.log(data);
 
-    const postsRef = firestore.collection(db, 'posts');
-    firestore.getDocs(postsRef).then((snapshot) => {
-      let posts: any[] = [];
-      snapshot.docs.forEach((doc) => {
-        posts.push({...doc.data(), id: doc.id});
+    console.log(username);
+    console.log(title);
+    console.log(description);
+    console.log(contact);
+    console.log(category);
+
+    const savePost = async () => {
+      await addDoc(collection(db, "posts"), {
+        username: username,
+        title: title,
+        description: description,
+        contact: contact,
+        category: category,
+      }).then(() => {
+        alert("Post Successful!");
       });
-      console.log(posts);
-    });
+    };
+
+    savePost();
   };
 
   return (
-    <FormContainer onSubmit={handleSubmit(onSubmit)}>
+    <FormContainer>
       <Label>
         Title:
-        <Input {...register('title', )} type="text" placeholder='Enter your title here' />
-        {errors.title && <span>{errors.title.message}</span>}
+        <Input {...register('title', )} type="text" placeholder='Enter your title here' onChange={(e) => setTitle(e.target.value)}/>
       </Label>
 
       <Label>
         Description:
-        <Textarea {...register('description', )} rows={5} placeholder='Enter item description here' style={{verticalAlign: 'top', lineHeight: '1' }}/>
-        {errors.description && <span>{errors.description.message}</span>}
+        <Textarea {...register('description', )} rows={5} placeholder='Enter item description here' style={{verticalAlign: 'top', lineHeight: '1' }} onChange={(e) => setDescription(e.target.value)}/>
       </Label>
 
       <Label>
         Contact Information:
-        <Input {...register('contactInfo', )} type="text" placeholder='ex: (123)-456-7890'/>
-        {errors.contactInfo && <span>{errors.contactInfo.message}</span>}
+        <Input {...register('contactInfo', )} type="text" placeholder='Email or Phone Number' onChange={(e) => setContact(e.target.value)} />
       </Label>
 
       <Label>
         Category:
-        <Select {...register('category', { required: 'Category is required' })}>
+        <Select {...register('category', { required: 'Category is required' })} onChange={(e) => setCategory(e.target.value)}>
 	<option value="" disabled>
 	  Select a category
 	</option>
@@ -68,7 +100,6 @@ const PostForm: React.FC = () => {
 	  </option>
 	))}
         </Select>
-        {errors.category && <span>{errors.category.message}</span>}
       </Label>
 
 	<Label>
@@ -77,7 +108,7 @@ const PostForm: React.FC = () => {
 	</Label>
 
     <ButtonContainer>
-        <Button type="submit">Submit</Button>
+        <Button type="submit" onClick={onPostClick}>Post</Button>
     </ButtonContainer>
     </FormContainer>
   );
