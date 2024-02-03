@@ -3,12 +3,12 @@ import {useEffect, useState} from 'react';
 import { useForm } from 'react-hook-form';
 import { FormContainer, Label, Input, Select, Button, ButtonContainer, Textarea } from './styles'; // Import styled components
 import { db, imgDb } from '../../database/firebase'
-import { addDoc, collection } from 'firebase/firestore';
+import { FieldValue, addDoc, collection } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { v4 as uuidv4 } from 'uuid';
 import { useRouter } from 'next/navigation';
-import { Timestamp } from 'firebase/firestore';
+import { Timestamp, serverTimestamp } from 'firebase/firestore';
 
 // Interface for form input
 interface FormInput {
@@ -53,6 +53,7 @@ const PostForm: React.FC = () => {
 
   const onPostClick = () => {
     // Handle form submission logic here
+
     if(!title || !description || !contact || !category) {
       alert("Required Fields Missing");
       return;
@@ -66,7 +67,7 @@ const PostForm: React.FC = () => {
         contact: contact,
         category: category,
         imgUrl: img,
-        timestamp: Timestamp.now()
+        timestamp: new Date(Timestamp.now().seconds*1000)
       });
       alert("Post Successful!");
       router.push('/home');
