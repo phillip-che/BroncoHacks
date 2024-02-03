@@ -2,6 +2,7 @@ import '../database/firebase'
 import { signInWithEmailAndPassword, getAuth, onAuthStateChanged, sendPasswordResetEmail } from 'firebase/auth'
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import '../styles/Login.css'; // Adjust the path based on your project structure
 
 const Login = () => {
 
@@ -47,24 +48,25 @@ const Login = () => {
 
     return (
         <div className="login-container">
-            <h2>Login</h2>
-                <form>
+            <form>
+                <h2>Login</h2>
                 <div>
                     <label>Email:</label>
-                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <input type="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} />
                 </div>
                 <div>
                     <label>Password:</label>
-                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                    <button type="button" onClick={handleResetClick}>
-                        Reset Password
-                    </button>
+                    <input type="password" placeholder="Enter your password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                    
                 </div>
-                    <button type="button" onClick={handleLoginClick}>
+                    <button type="button" className="button-login" onClick={handleLoginClick}>
                         Login
                     </button>
-                    <Link href="/createaccount">Create Account</Link>
-                </form>
+                    <button type="button" className="button-reset" onClick={handleResetClick}>
+                        Reset Password
+                    </button>
+                    <Link className="create-account" href="/createaccount">Create Account</Link>
+            </form>
             {error && <p style={{ color: 'red' }}>{error}</p>}
       </div>
   

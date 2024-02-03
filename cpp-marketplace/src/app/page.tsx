@@ -21,6 +21,9 @@ export default function Home() {
         setUserID(user.uid);
         // router.push('/home');
       } 
+      else {
+        setUserID("");
+      }
     });
     
   }, [auth]);

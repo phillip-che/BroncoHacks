@@ -4,6 +4,8 @@ import '../database/firebase'
 import { createUserWithEmailAndPassword, getAuth, sendEmailVerification, updateProfile } from 'firebase/auth'
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import '../styles/Signup.css'; // Adjust the path based on your project structure
+
 
 const SignUp = () => {
     const auth = getAuth();
@@ -37,24 +39,23 @@ const SignUp = () => {
 
     return (
         <div className="signup-container">
-            <h2>Create Account</h2>
                 <form>
+                <h2>Create Account</h2>
                 <div>
                     <label>Username:</label>
-                    <input type="username" value={username} onChange={(e) => setUsername(e.target.value)} />
+                    <input type="username" placeholder='Username' value={username} onChange={(e) => setUsername(e.target.value)} />
                 </div>
                 <div>
                     <label>Email:</label>
-                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <input type="email" placeholder='example@cpp.edu'value={email} onChange={(e) => setEmail(e.target.value)} />
                 </div>
                 <div>
                     <label>Password:</label>
-                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                    <input type="password" placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)} />
                 </div>
-                    <button type="button" onClick={handleCreateClick}>
+                    <button type="button" className="button-signup" onClick={handleCreateClick}>
                         Sign Up
                     </button>
-                    <Link href="/">Home</Link>
                 </form>
             {error && <p style={{ color: 'red' }}>{error}</p>}
       </div>
