@@ -6,6 +6,7 @@ import { Timestamp, collection, getDocs } from 'firebase/firestore';
 import { db } from '../../../database/firebase';
 import Navbar from 'components/Navbar';
 import '../home/page.css'
+import Link from 'next/link';
 
 interface Listing {
   id: string;
@@ -74,13 +75,15 @@ const MarketplaceApp: React.FC = () => {
       <div className="ListingsContainer">
         <List>
           {filteredListings.map((listing) => (
-            <ListingItem className="ListingItem" key={listing.id}>
-              <ListItemText primary={listing.title} />
-              <ListingDetails className="ListingDetails">
-			  	<div>{listing.category}</div>
-  				<div>{listing.timestamp && listing.timestamp.toDate().toLocaleString()}</div>
-			  </ListingDetails>
-            </ListingItem>
+			<Link href={`/listing/${listing.id}`} key={listing.id} >
+				<ListingItem className="ListingItem" key={listing.id}>
+				<ListItemText primary={listing.title} />
+				<ListingDetails className="ListingDetails">
+					<div>{listing.category}</div>
+					<div>{listing.timestamp && listing.timestamp.toDate().toLocaleString()}</div>
+				</ListingDetails>
+				</ListingItem>
+			</Link>
           ))}
         </List>
       </div>

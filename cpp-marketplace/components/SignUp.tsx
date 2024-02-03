@@ -3,7 +3,6 @@
 import '../database/firebase'
 import { createUserWithEmailAndPassword, getAuth, sendEmailVerification, updateProfile } from 'firebase/auth'
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
 import '../styles/Signup.css'; // Adjust the path based on your project structure
 
 

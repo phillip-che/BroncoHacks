@@ -4,22 +4,33 @@ import React, { useState, useEffect } from 'react';
 import { Container, Paper, styled } from '@mui/material';
 import Navbar from 'components/Navbar';
 import { Timestamp, collection, getDocs, doc, getDoc } from 'firebase/firestore';
-import db from '../../../database/firebase';
+import {db} from '../../../../database/firebase';
 import './page.css';
+import { useParams } from 'next/navigation'
+import { FC } from 'react';
 
-function ViewListing() {
+interface pageProps {
+	params: {
+		listingId: string
+	}
+}
+
+const ViewListing: FC<pageProps> = ({ params }) => {
 	const [listingDetails, setListingDetails] = useState<any>({}); // Use appropriate types
+	console.log(params.listingId);
+	// const params = useParams();
   
 	useEffect(() => {
 	  const fetchListingDetails = async () => {
 		try {
-		  const postId = 'your-post-id'; // Replace with the actual post ID
+		  const postId = params.listingId; // Replace with the actual post ID
 		  const postDocRef = doc(db, 'posts', postId);
 		  const postDocSnapshot = await getDoc(postDocRef);
   
 		  if (postDocSnapshot.exists()) {
 			const data = postDocSnapshot.data();
 			setListingDetails(data);
+			console.log(data);
 		  } else {
 			console.log('Post not found!');
 		  }
@@ -47,16 +58,19 @@ function ViewListing() {
 			<div>
 			  <strong>Category:</strong> {listingDetails.category || 'N/A'}
 			</div>
+
+			<div>
+			  <strong>Contact:</strong> {listingDetails.contact || 'N/A'}
+			</div>
   
 			<div>
-			  <strong>Timestamp:</strong> {listingDetails.timestamp || 'N/A'}
+			  {/* <strong>Timestamp:</strong> {listingDetails.timestamp || 'N/A'} */}
 			</div>
   
 			{/* Display image from URL */}
-			{listingDetails.imageUrl && (
+			{listingDetails.imgUrl && (
 			  <div>
-				<strong>Image:</strong>
-				<img src={listingDetails.imageUrl} alt="Listing" style={{ maxWidth: '100%' }} />
+				<img src={listingDetails.imgUrl} alt="Listing" style={{ maxWidth: '25%' }} />
 			  </div>
 			)}
 		  </Paper>
