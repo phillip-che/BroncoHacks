@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Paper, List, ListItem, ListItemText, styled } from '@mui/material';
 import db from '../../../database/firebase';
 import { doc, getDoc } from 'firebase/firestore';
+import Navbar from 'components/Navbar';
 
 interface Listing {
   id: number;
@@ -75,6 +76,7 @@ const MarketplaceApp: React.FC = () => {
 
 	return (
 		<AppContainer>
+			<Navbar />
 		<CategoriesContainer>
 			<h2>Categories</h2>
 			<CategoryList>
